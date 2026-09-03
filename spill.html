@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hvilken bryllupsgjest er du? — Johanne & Sondre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plomme:#3C1F3E;
+  --solnedgang:#E4572E;
+  --fersken:#F6B08C;
+  --krem:#FFF6E9;
+  --oliven:#5A6B3B;
+  --sennep:#E3B23C;
+  --rosa:#E8877F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Karla',sans-serif;
+  background:var(--krem);
+  color:var(--plomme);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:'Shrikhand',cursive;font-weight:400;letter-spacing:.01em}
+
+/* ---------- PASSORDGATE (identisk med index.html) ---------- */
+#gate{
+  position:fixed;inset:0;z-index:100;
+  background:radial-gradient(ellipse at 50% 120%, var(--solnedgang) 0%, var(--rosa) 35%, var(--plomme) 80%);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  transition:opacity .6s ease, visibility .6s;
+}
+#gate.open{opacity:0;visibility:hidden}
+.gate-card{
+  text-align:center;color:var(--krem);max-width:420px;width:100%;
+}
+.gate-sun{
+  width:110px;height:110px;margin:0 auto 20px;
+  border-radius:50%;
+  background:var(--sennep);
+  box-shadow:0 0 0 10px rgba(227,178,60,.25), 0 0 0 22px rgba(227,178,60,.12);
+  animation:pulse 4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@media (prefers-reduced-motion: reduce){.gate-sun{animation:none}}
+.gate-card h1{font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin-bottom:6px}
+.gate-card p{margin-bottom:26px;opacity:.9}
+.gate-card input{
+  width:100%;padding:15px 20px;border-radius:999px;border:2px solid var(--krem);
+  background:rgba(255,246,233,.12);color:var(--krem);
+  font-family:'Karla',sans-serif;font-size:1.05rem;text-align:center;outline:none;
+}
+.gate-card input::placeholder{color:rgba(255,246,233,.6)}
+.gate-card input:focus{background:rgba(255,246,233,.22)}
+.gate-card button{
+  margin-top:14px;width:100%;padding:15px 20px;border-radius:999px;border:none;
+  background:var(--sennep);color:var(--plomme);
+  font-family:'Karla',sans-serif;font-weight:700;font-size:1.05rem;cursor:pointer;
+  transition:transform .15s ease;
+}
+.gate-card button:hover{transform:translateY(-2px)}
+.gate-card button:focus-visible,.gate-card input:focus-visible{outline:3px solid var(--sennep);outline-offset:3px}
+#gateFeil{margin-top:12px;font-weight:700;color:var(--sennep);min-height:1.4em}
+
+/* ---------- SPILL ---------- */
+.spill-wrap{
+  max-width:640px;margin:0 auto;padding:70px 24px 100px;
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+}
+.spill-tittel{font-size:clamp(2rem,8vw,3.2rem);margin-bottom:10px;color:var(--solnedgang)}
+.spill-under{margin-bottom:44px;opacity:.85;font-size:1.1rem}
+
+.snurr-knapp{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:clamp(160px,50vw,210px);height:clamp(160px,50vw,210px);border-radius:50%;
+  background:var(--plomme);color:var(--krem);
+  font-family:'Shrikhand',cursive;font-size:clamp(1.2rem,5vw,1.7rem);
+  border:6px solid var(--sennep);cursor:pointer;
+  box-shadow:0 10px 0 rgba(60,31,62,.25);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.snurr-knapp:hover{transform:translateY(-4px)}
+.snurr-knapp:active{transform:translateY(4px);box-shadow:0 6px 0 rgba(60,31,62,.25)}
+.snurr-knapp:focus-visible{outline:4px solid var(--sennep);outline-offset:4px}
+.snurr-knapp:disabled{opacity:.6;cursor:default;transform:none}
+
+.hjul{
+  display:none;
+  background:#fff;border:4px solid var(--plomme);border-radius:26px 26px 90px 26px;
+  padding:44px 28px;margin-bottom:24px;width:100%;
+}
+.hjul.aktiv{display:block}
+.hjul .hjul-emoji{font-size:4rem;line-height:1}
+.hjul .hjul-tittel{font-family:'Shrikhand',cursive;font-size:clamp(1.4rem,6vw,2rem);margin-top:10px;color:var(--plomme)}
+@media (prefers-reduced-motion: no-preference){
+  .hjul.flimrer{animation:flimmer .09s ease-in-out}
+}
+@keyframes flimmer{from{opacity:.35;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+
+.resultat{display:none;width:100%}
+.resultat.aktiv{display:block}
+.resultat-kort{
+  background:#fff;border:4px solid var(--plomme);border-radius:26px 26px 90px 26px;
+  padding:38px 28px;margin-bottom:26px;
+}
+@media (prefers-reduced-motion: no-preference){
+  .resultat-kort{animation:landet .4s ease}
+}
+@keyframes landet{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.resultat-emoji{font-size:5rem;line-height:1}
+.resultat-tittel{font-family:'Shrikhand',cursive;font-size:clamp(1.8rem,8vw,2.8rem);color:var(--solnedgang);margin:10px 0 18px}
+.resultat-beskrivelse{font-size:1.15rem;font-weight:700;margin-bottom:18px}
+.resultat-natur{
+  background:var(--krem);border-radius:14px;padding:12px 18px;font-style:italic;margin-bottom:18px;
+}
+.resultat-natur strong{font-style:normal;color:var(--oliven)}
+.resultat-punchline{
+  font-family:'Shrikhand',cursive;font-size:clamp(1.1rem,5vw,1.5rem);
+  color:var(--plomme);background:var(--sennep);
+  border-radius:14px;padding:14px 18px;
+}
+.resultat-knapper{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
+.knapp2{
+  display:inline-block;padding:14px 28px;border-radius:999px;border:none;
+  font-family:'Karla',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;
+  text-decoration:none;transition:transform .15s ease;
+}
+.knapp2:hover{transform:translateY(-2px)}
+.knapp2:focus-visible{outline:3px solid var(--plomme);outline-offset:3px}
+.knapp2.primaer{background:var(--plomme);color:var(--krem)}
+.knapp2.sekundaer{background:#fff;color:var(--plomme);border:3px solid var(--plomme)}
+.knapp2:disabled{opacity:.6;cursor:default;transform:none}
+.del-bekreftelse{margin-top:12px;font-weight:700;color:var(--oliven);min-height:1.4em}
+
+.konfetti{position:fixed;top:-40px;font-size:1.8rem;pointer-events:none;z-index:50;animation:konfettiFall linear forwards}
+@keyframes konfettiFall{to{transform:translateY(110vh) rotate(360deg);opacity:.2}}
+@media (prefers-reduced-motion: reduce){
+  .konfetti{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- PASSORDGATE (identisk med index.html) -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-sun" aria-hidden="true"></div>
+    <h1>Johanne &amp; Sondre</h1>
+    <p>Skriv inn passordet fra invitasjonen</p>
+    <input type="password" id="pw" placeholder="Passord" aria-label="Passord" autocomplete="off">
+    <button id="pwBtn">Åpne siden</button>
+    <div id="gateFeil" role="alert" aria-live="polite"></div>
+  </div>
+</div>
+
+<!-- SPILL -->
+<div class="spill-wrap">
+  <div id="snurrSkjerm">
+    <h1 class="spill-tittel">Hvilken bryllupsgjest er du?</h1>
+    <p class="spill-under">Trykk på hjulet. Skjebnen ordner resten.</p>
+    <button id="snurrKnapp" class="snurr-knapp" type="button">🎰 Snurr!</button>
+  </div>
+
+  <div id="hjul" class="hjul" aria-hidden="true">
+    <div class="hjul-emoji" id="hjulEmoji">🎲</div>
+    <div class="hjul-tittel" id="hjulTittel">Snurrer …</div>
+  </div>
+
+  <div id="resultat" class="resultat" role="status" aria-live="polite">
+    <div class="resultat-kort" id="resultatKort">
+      <div class="resultat-emoji" id="resEmoji"></div>
+      <h2 class="resultat-tittel" id="resTittel"></h2>
+      <p class="resultat-beskrivelse" id="resBeskrivelse"></p>
+      <p class="resultat-natur" id="resNatur"></p>
+      <p class="resultat-punchline" id="resPunchline"></p>
+    </div>
+    <div class="resultat-knapper">
+      <button id="snurrIgjenKnapp" class="knapp2 primaer" type="button">Snurr igjen</button>
+      <button id="delKnapp" class="knapp2 sekundaer" type="button">Del</button>
+      <a class="knapp2 sekundaer" href="index.html">← Tilbake til festivalen</a>
+    </div>
+    <div class="del-bekreftelse" id="delBekreftelse" aria-live="polite"></div>
+  </div>
+</div>
+
+<script>
+// ---------- PASSORDGATE (identisk logikk og passord som index.html) ----------
+const PASSORD = "29mai"; // ← endre passordet her
+
+const gate = document.getElementById('gate');
+const pw = document.getElementById('pw');
+const btn = document.getElementById('pwBtn');
+const feil = document.getElementById('gateFeil');
+
+function sjekk(){
+  if(pw.value.trim().toLowerCase() === PASSORD.toLowerCase()){
+    gate.classList.add('open');
+    setTimeout(()=>gate.remove(), 700);
+  } else {
+    feil.textContent = "Hmm, det stemte ikke helt — prøv igjen!";
+    pw.value = "";
+    pw.focus();
+  }
+}
+btn.addEventListener('click', sjekk);
+pw.addEventListener('keydown', e => { if(e.key === 'Enter') sjekk(); });
+
+// ---------- GJESTETYPER ----------
+const GJESTER = [
+  {tittel:"Den fulle onkelen", emoji:"🍺",
+   beskrivelse:`Har vært på plass siden aperitiffen og teller drinken sin i «en til, så er jeg ferdig» — sagt fire ganger. Elsker alle, spesielt DJ-en, som han nå regner som sin nye bestevenn.`,
+   settINaturen:`Ved bardisken, med armen rundt en han «kjenner fra før» (han kjenner dem ikke).`,
+   punchline:`Ingen ba om en skål. Han skålte likevel.`},
+
+  {tittel:"Den single venninna", emoji:"💃",
+   beskrivelse:`Har på seg den beste kjolen i lokalet og vet det. Danser som om DJ-en spiller bare for henne, og kommenterer høyt hvor «søtt» alt er mens hun sjekker Tinder mellom rettene.`,
+   settINaturen:`Midt på dansegulvet, med et glass champagne hevet mot ingen spesiell.`,
+   punchline:`Hun kom alene. Hun forlater festen som legenden.`},
+
+  {tittel:"Den politiske gjesten", emoji:"🗳️",
+   beskrivelse:`Klarte å nevne rentenivået før forretten var ferdig. Mener bryllupsmiddagen er perfekt setting for en grundig gjennomgang av alt som er galt med samfunnet.`,
+   settINaturen:`Bord 4, med hevet gaffel og et argument som «bare må fullføres».`,
+   punchline:`Brudeparet ba om kjærlighet i lufta. Han ga dem en paneldebatt.`},
+
+  {tittel:"Sladderfabrikken", emoji:"📡",
+   beskrivelse:`Vet hvem som dater hvem, hvem som IKKE snakker sammen lenger, og hvorfor. Har informasjon om alle gjestene før forretten er servert — og deler den villig, i fortrolighet, til alle.`,
+   settINaturen:`I en tett klynge nær toalettene, hviskende bak hånden.`,
+   punchline:`Hun vet ikke hvor bryllupskaken kommer fra. Hun vet alt annet.`},
+
+  {tittel:"Humorkongen", emoji:"🎤",
+   beskrivelse:`Har forberedt vitser i ukevis og tester dem ut på alle bordnaboene etter tur. Litt for høy stemme, litt for lange pauser før punchline — men klarer faktisk å få salen til å le minst to ganger.`,
+   settINaturen:`Står, ikke sitter, ved bordet — for bedre komisk timing.`,
+   punchline:`Han øvde på speilet. Speilet lo ikke. Salen gjorde det.`},
+
+  {tittel:"Tåretanten", emoji:"😭",
+   beskrivelse:`Gråter allerede når orgelet starter, lenge før brudeparet er kommet inn. Har med tre lommetørklær og bruker alle før vielsen er over.`,
+   settINaturen:`Fremste benkerad, med mascara i fritt fall.`,
+   punchline:`Presten sa «ja, vi er samlet her». Hun var allerede i tårer.`},
+
+  {tittel:"Fotografen som ikke er fotografen", emoji:"📸",
+   beskrivelse:`Har med eget speilreflekskamera «bare for hobbyen», og står strategisk i veien for den faktiske bryllupsfotografen gjennom hele seremonien.`,
+   settINaturen:`Bøyd i kne midt i midtgangen, akkurat idet bruden skal gå inn.`,
+   punchline:`Den ekte fotografen tok ett bilde. Han tok tre hundre.`},
+
+  {tittel:"Dansegulv-generalen", emoji:"💪",
+   beskrivelse:`Tar ansvar for stemningen på dansegulvet fra sekund én. Organiserer conga-linjer, roper instruksjoner til DJ-en, og nekter å la noen forlate gulvet før klokken er langt over midnatt.`,
+   settINaturen:`Midt på gulvet, dirigerer med begge armene.`,
+   punchline:`Ingen valgte ham til general. Han valgte seg selv.`},
+
+  {tittel:"Bar-filosofen", emoji:"🥃",
+   beskrivelse:`Har funnet meningen med livet et sted mellom drink nummer tre og fire, og deler den villig med alle som kommer nær baren. Snakker mye om «energi» og at «alt henger sammen».`,
+   settINaturen:`Lener seg mot baren med et glass whisky og et fjernt blikk.`,
+   punchline:`Han kom for én drink. Han fant meningen med livet — og seks til.`},
+
+  {tittel:"Den som holder en tale ingen ba om", emoji:"🎙️",
+   beskrivelse:`Reiser seg brått mellom hovedrett og dessert, tar mikrofonen fra en overrasket toastmaster, og holder en tale om «hvor lenge han eller hun har kjent brudeparet» — som viser seg å være siden i fjor sommer.`,
+   settINaturen:`Står med mikrofonen i et fast grep, ingen tør ta den tilbake.`,
+   punchline:`Programmet sa fire taler. Kvelden endte med syv.`},
+
+  {tittel:"Eksen som «bare er glad på deres vegne»", emoji:"😊",
+   beskrivelse:`Kom med et smil som er akkurat 4 % for stort. Nevner gamle minner titt og ofte, «helt tilfeldig», og har lagt spesielt mye innsats i antrekket denne kvelden.`,
+   settINaturen:`Nær utgangen, klar til en verdig exit hvis noe blir for mye.`,
+   punchline:`Hun sa hun var over det. Antrekket sa noe annet.`},
+
+  {tittel:"Barnevakten som egentlig ville feste", emoji:"👶",
+   beskrivelse:`Er satt til å passe barna i eget rom med tegnefilm og saft, men kikker misunnelig mot dansegulvet hver gang bassen durer gjennom veggen.`,
+   settINaturen:`I dørkarmen til barnerommet, ett øre mot festlokalet.`,
+   punchline:`Barna sovnet klokken 22. Hun var fortsatt våken av avmisunnelse.`},
+
+  {tittel:"Mamma til brudeparet", emoji:"👑",
+   beskrivelse:`Vet nøyaktig hvem som skal sitte hvor, har ringt blomsterbutikken tre ganger denne uken, og har en reserveplan for reserveplanen.`,
+   settINaturen:`I konstant bevegelse mellom kjøkkendøren og gavebordet.`,
+   punchline:`Alle trodde brudeparet planla bryllupet. Mamma vet bedre.`},
+
+  {tittel:"Kollegaen som ikke kjenner noen", emoji:"👔",
+   beskrivelse:`Invitert fordi hen «er så hyggelig på jobb», men kjenner strengt tatt bare brudeparet. Smiler høflig, nikker mye, og blir uventet god venn med bordnaboen innen dessert.`,
+   settINaturen:`Ved bordkortet, dobbeltsjekker at hen faktisk sitter riktig.`,
+   punchline:`Kom for jobben. Ble værende for kaken.`},
+
+  {tittel:"Playlist-kritikeren", emoji:"🎧",
+   beskrivelse:`Har sterke, høylytte meninger om hver eneste sang som spilles, og et Spotify-forslag klart i baklomma «hvis noen spør». Ingen spurte. Han sier det likevel.`,
+   settINaturen:`Nær DJ-pulten, lener seg inn med «bare ett forslag til».`,
+   punchline:`DJ-en spilte det folk ville danse til. Han hadde en bedre idé.`},
+
+  {tittel:"Den som forsvinner kl. 21 uten å si ha det", emoji:"👻",
+   beskrivelse:`Der en stund, spiste middag, danset én sang — og så, plutselig, er hen bare borte. Ingen så det skje. Det er en gave, egentlig.`,
+   settINaturen:`Ingensteds. Det er hele poenget.`,
+   punchline:`Han var der klokken 20.55. Klokken 21.05 var han en myte.`},
+
+  {tittel:"Soloppgangsveteranen", emoji:"🌅",
+   beskrivelse:`Fortsatt på dansegulvet når lyset begynner å endre farge utenfor vinduene. Har byttet ut høye hæler med bare føtter for lengst.`,
+   settINaturen:`Siste person på et nesten tomt dansegulv, med skoene i hånden.`,
+   punchline:`Alle andre dro hjem. Han ventet på soloppgangen.`},
+
+  {tittel:"Kakeoppsynet", emoji:"🎂",
+   beskrivelse:`Har utnevnt seg selv til uoffisiell vokter av bryllupskaken lenge før den er skåret opp. Har allerede bestemt seg for hvilket stykke som blir hans.`,
+   settINaturen:`To meter fra kakebordet, med et øye konstant rettet mot kniven.`,
+   punchline:`Ingen ba ham vokte kaken. Kaken trengte ham likevel.`},
+
+  {tittel:"Blomsterbarnet på 34", emoji:"🌸",
+   beskrivelse:`Voksen kvinne, ansatt, huseier — og likevel dypt fornøyd med å strø kronblader ned midtgangen fordi «det er tradisjon». Tar oppdraget mer seriøst enn noen forventet.`,
+   settINaturen:`Foran brudefølget, med kurven strategisk tømt for maksimal effekt.`,
+   punchline:`34 år gammel. Null anger.`},
+
+  {tittel:"Den som nettopp har begynt å løpe", emoji:"🏃",
+   beskrivelse:`Har løpt i tre uker og seks økter, og alle skal vite det. Bruker middagssamtalen til å forklare intervalltrening for bordnaboer som egentlig bare ville snakke om vielsen.`,
+   settINaturen:`Lener seg over bordet, viser Strava-statistikk på mobilen.`,
+   punchline:`Han løp fem kilometer én gang. Han har snakket om det i to timer.`},
+
+  {tittel:"Bukettfangeren", emoji:"💐",
+   beskrivelse:`Har posisjonert seg strategisk foran resten av flokken lenge før bruden snur ryggen til. Strekker seg med en intensitet som overrasker hen selv, og feirer som om det var OL-gull.`,
+   settINaturen:`Fremst i klyngen av håpefulle, med albuene klare.`,
+   punchline:`Det var bare en bukett. For henne var det en idrettsgren.`},
+
+  {tittel:"Vipps-sjefen", emoji:"💸",
+   beskrivelse:`Har memorert Vipps-nummeret utenat og minner høflig, men bestemt, alle gjester som ikke har «kjøpt festivalbillett» ennå.`,
+   settINaturen:`Ved inngangen, med telefonen klar for å vise fram QR-koden.`,
+   punchline:`Ingen spurte hvordan man betaler. Hun fortalte likevel.`},
+
+  {tittel:"Den som «ikke drikker i kveld»", emoji:"🍷",
+   beskrivelse:`Sa det bestemt ved bordet klokken 18: «Jeg skal faktisk ta det rolig i kveld.» Klokken 23 leder hen an i en skål for tredje gang, helt uten kontakt med den opprinnelige planen.`,
+   settINaturen:`Nær baren, med et glass som fylles på mystisk vis.`,
+   punchline:`Planen holdt i to timer. Kvelden holdt lenger.`},
+
+  {tittel:"Kjærestepar-inspektøren", emoji:"💍",
+   beskrivelse:`Bruker enhver anledning til å spørre unge par ved bordet om deres egne fremtidsplaner, gjerne midt under forretten. Mener det er en helt naturlig samtale å ha med folk hen akkurat har møtt.`,
+   settINaturen:`Lener seg over bordet med et megetsigende blikk mot et hvilket som helst par.`,
+   punchline:`Spurte seks par samme spørsmål. Fikk seks litt for lange stillheter.`},
+
+  {tittel:"Nabobord-sjarmøren", emoji:"🍽️",
+   beskrivelse:`Har på magisk vis blitt bestevenn med hele nabobordet innen forretten er ferdig, selv om hen egentlig ikke kjenner noen av dem. Bytter bord to ganger «for å spre gleden».`,
+   settINaturen:`Midt mellom to bord, med en stol trukket inn som ikke egentlig er hans.`,
+   punchline:`Kom til ett bord. Erobret tre.`},
+
+  {tittel:"Taleglemmeren", emoji:"📝",
+   beskrivelse:`Har skrevet tale på baksiden av en konvolutt i taxien på vei dit. Mister tråden etter to setninger, finner den igjen etter et minutt, og avslutter med en historie som ikke egentlig handler om brudeparet.`,
+   settINaturen:`Står med et skjelvende ark, leser høyt for seg selv før mikrofonen kommer.`,
+   punchline:`Talen var seks minutter. Fire av dem var stillhet.`},
+
+  {tittel:"GoPro-bestefaren", emoji:"🎥",
+   beskrivelse:`Har kjøpt seg et actionkamera til anledningen og filmer i 4K fra vinkler ingen ba om — under bordet, fra hoften, én gang festet til en ballong.`,
+   settINaturen:`Bak i lokalet, med et kamera på en teleskopstang.`,
+   punchline:`Han filmet hele kvelden. Ingen vet hvorfor. Ingen tør spørre.`},
+
+  {tittel:"Diett-martyren", emoji:"🥗",
+   beskrivelse:`Spiser bare det grønne på tallerkenen og nevner hvorfor — glutenfritt, lavkarbo, eller «bare en greie akkurat nå» — tre separate ganger under middagen, uoppfordret.`,
+   settINaturen:`Ved bordet, skyver kjøttet forsiktig til side med gaffelen.`,
+   punchline:`Ingen spurte om dietten. Hun fortalte likevel — tre ganger.`},
+
+  {tittel:"Den som kjenner brudeparet «egentlig best»", emoji:"🏆",
+   beskrivelse:`Konkurrerer aktivt, om enn usagt, med resten av gjestene om tittelen som brudeparets nærmeste venn. Nevner innsidevitser ingen andre forstår og retter andres historier om paret.`,
+   settINaturen:`Så nær brudebordet som bordplasseringen tillater.`,
+   punchline:`Alle kjente brudeparet. Hun kjente dem «egentlig».`},
+
+  {tittel:"Salmesuffleren", emoji:"🎵",
+   beskrivelse:`Synger salmene høyest av alle i kirken, med stor overbevisning — og feil tekst, feil toneart, feil vers. Stopper ikke opp for det.`,
+   settINaturen:`Midt i benkeraden, et halvt sekund bak resten av forsamlingen.`,
+   punchline:`Hun kunne ikke teksten. Hun sang den likevel — høyt.`},
+
+  {tittel:"Taxi-tellekorpset", emoji:"🚕",
+   beskrivelse:`Regner ut Uber-prisen hjem fra klokken 20 og deler oppdateringer i takt med kvelden. Har allerede en beredskapsplan for delt taxi med tre gjester hen akkurat har møtt.`,
+   settINaturen:`Ved bordet, med telefonen ute og en app åpen «bare for å sjekke».`,
+   punchline:`Festen var akkurat i gang. Hjemturen var allerede planlagt.`},
+
+  {tittel:"Gaven-uten-kort-giveren", emoji:"🎁",
+   beskrivelse:`Har med en fint innpakket gave, plassert pent på gavebordet — helt uten kort. Brudeparet vil aldri, noensinne, finne ut hvem den var fra.`,
+   settINaturen:`Legger pakken diskré på gavebordet og forsvinner inn i mengden.`,
+   punchline:`Gaven var perfekt. Avsenderen forblir et mysterium.`},
+
+  {tittel:"Korridor-strategen", emoji:"🗺️",
+   beskrivelse:`Tilbringer påfallende mye tid i gangen utenfor festlokalet, i dyp samtale om planlegging av «neste fest» — helst allerede før denne er ferdig.`,
+   settINaturen:`Utenfor toalettdøren, med mobilen ute og en kalender-app åpen.`,
+   punchline:`Bryllupet var ikke ferdig. Neste fest var det allerede.`},
+
+  {tittel:"Det bunnløse vinglasset", emoji:"🍷",
+   beskrivelse:`Har et glass som aldri, under noen omstendigheter, står tomt lenger enn tretti sekunder. Ingen har sett hvem som fyller det. Det er kanskje ham selv. Det er kanskje magi.`,
+   settINaturen:`Ved bordet, glasset alltid akkurat over halvfullt.`,
+   punchline:`Ingen så påfyllingen skje. Den skjedde likevel.`},
+
+  {tittel:"Speeddate-tanten", emoji:"💘",
+   beskrivelse:`Har bestemt seg for at kvelden også er en gyllen anledning til å matche single gjester med hverandre. Introduserer folk uoppfordret, med et megetsigende blikk og «dere to burde snakke sammen».`,
+   settINaturen:`Mellom to bord, med en hånd på hver av to overraskede gjester.`,
+   punchline:`Kom for bryllupet. Dro med en plan om tre nye par.`},
+
+  {tittel:"Sokke-avhopperen", emoji:"🧦",
+   beskrivelse:`Har hælene av innen klokken 22.01, skoene forlatt et sted under bordet, og danser resten av kvelden i strømpelesten med full overbevisning.`,
+   settINaturen:`Dansegulvet, med skoene forsvunnet sporløst.`,
+   punchline:`Skoene varte to timer. Festen varte hele natten.`},
+
+  {tittel:"«Bare ett bilde til»-fotografen", emoji:"🤳",
+   beskrivelse:`Ber brudeparet stille opp for «bare ett bilde til» — for sjette gang. Har egen visjon for komposisjonen som ikke alltid matcher det den faktiske fotografen ba om.`,
+   settINaturen:`Rett ved siden av den offisielle fotografen, med mobilen hevet.`,
+   punchline:`Den ekte fotografen var ferdig. Han var akkurat i gang.`},
+
+  {tittel:"Taco-spørreren", emoji:"🌮",
+   beskrivelse:`Har hørt et rykte om at det blir noe å spise senere på kvelden, og spør høflig, men insisterende, gjennom hele middagen om det stemmer at det blir taco.`,
+   settINaturen:`Nær kjøkkendøren, med et håpefullt blikk hver gang noen kommer ut derfra.`,
+   punchline:`Ingen bekreftet tacoen. Han fortsatte å spørre.`}
+];
+
+// ---------- RULETT ----------
+const snurrSkjerm = document.getElementById('snurrSkjerm');
+const hjul = document.getElementById('hjul');
+const hjulEmoji = document.getElementById('hjulEmoji');
+const hjulTittel = document.getElementById('hjulTittel');
+const resultat = document.getElementById('resultat');
+const snurrKnapp = document.getElementById('snurrKnapp');
+const snurrIgjenKnapp = document.getElementById('snurrIgjenKnapp');
+const delKnapp = document.getElementById('delKnapp');
+const delBekreftelse = document.getElementById('delBekreftelse');
+
+function reduserBevegelse(){
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function settHjulInnhold(g){
+  hjulEmoji.textContent = g.emoji;
+  hjulTittel.textContent = g.tittel;
+}
+
+function visResultat(g){
+  document.getElementById('resEmoji').textContent = g.emoji;
+  document.getElementById('resTittel').textContent = g.tittel;
+  document.getElementById('resBeskrivelse').textContent = g.beskrivelse;
+  document.getElementById('resNatur').innerHTML = '<strong>Sett i naturen:</strong> ' + g.settINaturen;
+  document.getElementById('resPunchline').textContent = g.punchline;
+  hjul.classList.remove('aktiv');
+  resultat.classList.add('aktiv');
+  delBekreftelse.textContent = '';
+  konfetti();
+}
+
+function laasKnapper(laast){
+  snurrKnapp.disabled = laast;
+  snurrIgjenKnapp.disabled = laast;
+  delKnapp.disabled = laast;
+}
+
+function snurr(){
+  laasKnapper(true);
+  snurrSkjerm.style.display = 'none';
+  resultat.classList.remove('aktiv');
+  hjul.classList.add('aktiv');
+
+  const endelig = GJESTER[Math.floor(Math.random() * GJESTER.length)];
+
+  if(reduserBevegelse()){
+    settHjulInnhold(endelig);
+    setTimeout(()=>{ visResultat(endelig); laasKnapper(false); }, 300);
+    return;
+  }
+
+  let steg = 0;
+  const maksSteg = 22;
+  let forsinkelse = 50;
+
+  function tikk(){
+    const tilfeldig = GJESTER[Math.floor(Math.random() * GJESTER.length)];
+    settHjulInnhold(tilfeldig);
+    hjul.classList.remove('flimrer');
+    void hjul.offsetWidth; // tving reflow så animasjonen kan starte på nytt
+    hjul.classList.add('flimrer');
+    steg++;
+    forsinkelse *= 1.08;
+    if(steg < maksSteg){
+      setTimeout(tikk, forsinkelse);
+    } else {
+      settHjulInnhold(endelig);
+      setTimeout(()=>{ visResultat(endelig); laasKnapper(false); }, 500);
+    }
+  }
+  tikk();
+}
+
+async function del(){
+  const tittel = document.getElementById('resTittel').textContent;
+  const emoji = document.getElementById('resEmoji').textContent;
+  if(!tittel) return;
+  const tekst = `Jeg er ${tittel} ${emoji} i bryllupet til Johanne & Sondre 🎶 Hvem er du? johanneogsondre.no/spill.html`;
+
+  if(navigator.share){
+    try{
+      await navigator.share({text: tekst});
+    }catch(e){
+      // brukeren avbrøt delingen — ikke noe å gjøre
+    }
+    return;
+  }
+
+  try{
+    await navigator.clipboard.writeText(tekst);
+    delBekreftelse.textContent = 'Kopiert til utklippstavlen! ✅';
+  }catch(e){
+    delBekreftelse.textContent = 'Fikk ikke kopiert automatisk. Tekst: ' + tekst;
+  }
+}
+
+function konfetti(){
+  if(reduserBevegelse()) return;
+  const emojier = ['🎉','✨','🎊','🌸','🎈'];
+  for(let i = 0; i < 20; i++){
+    const el = document.createElement('div');
+    el.className = 'konfetti';
+    el.textContent = emojier[Math.floor(Math.random() * emojier.length)];
+    el.style.left = (Math.random() * 100) + 'vw';
+    el.style.animationDelay = (Math.random() * 0.4) + 's';
+    el.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    document.body.appendChild(el);
+    setTimeout(()=> el.remove(), 4200);
+  }
+}
+
+snurrKnapp.addEventListener('click', snurr);
+snurrIgjenKnapp.addEventListener('click', snurr);
+delKnapp.addEventListener('click', del);
+</script>
+
+</body>
+</html>
