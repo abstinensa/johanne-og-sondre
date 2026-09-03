@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Johanne & Sondre — 25. mai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Karla:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plomme:#3C1F3E;
+  --solnedgang:#E4572E;
+  --fersken:#F6B08C;
+  --krem:#FFF6E9;
+  --oliven:#5A6B3B;
+  --sennep:#E3B23C;
+  --rosa:#E8877F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Karla',sans-serif;
+  background:var(--krem);
+  color:var(--plomme);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:'Shrikhand',cursive;font-weight:400;letter-spacing:.01em}
+
+/* ---------- PASSORDGATE ---------- */
+#gate{
+  position:fixed;inset:0;z-index:100;
+  background:radial-gradient(ellipse at 50% 120%, var(--solnedgang) 0%, var(--rosa) 35%, var(--plomme) 80%);
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  transition:opacity .6s ease, visibility .6s;
+}
+#gate.open{opacity:0;visibility:hidden}
+.gate-card{
+  text-align:center;color:var(--krem);max-width:420px;width:100%;
+}
+.gate-sun{
+  width:110px;height:110px;margin:0 auto 20px;
+  border-radius:50%;
+  background:var(--sennep);
+  box-shadow:0 0 0 10px rgba(227,178,60,.25), 0 0 0 22px rgba(227,178,60,.12);
+  animation:pulse 4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@media (prefers-reduced-motion: reduce){.gate-sun{animation:none}}
+.gate-card h1{font-size:clamp(2rem,7vw,3rem);line-height:1.1;margin-bottom:6px}
+.gate-card p{margin-bottom:26px;opacity:.9}
+.gate-card input{
+  width:100%;padding:15px 20px;border-radius:999px;border:2px solid var(--krem);
+  background:rgba(255,246,233,.12);color:var(--krem);
+  font-family:'Karla',sans-serif;font-size:1.05rem;text-align:center;outline:none;
+}
+.gate-card input::placeholder{color:rgba(255,246,233,.6)}
+.gate-card input:focus{background:rgba(255,246,233,.22)}
+.gate-card button{
+  margin-top:14px;width:100%;padding:15px 20px;border-radius:999px;border:none;
+  background:var(--sennep);color:var(--plomme);
+  font-family:'Karla',sans-serif;font-weight:700;font-size:1.05rem;cursor:pointer;
+  transition:transform .15s ease;
+}
+.gate-card button:hover{transform:translateY(-2px)}
+.gate-card button:focus-visible,.gate-card input:focus-visible{outline:3px solid var(--sennep);outline-offset:3px}
+#gateFeil{margin-top:12px;font-weight:700;color:var(--sennep);min-height:1.4em}
+
+/* ---------- HERO ---------- */
+.hero{
+  min-height:100vh;
+  background:linear-gradient(180deg, var(--plomme) 0%, #6B2D5C 40%, var(--solnedgang) 78%, var(--sennep) 100%);
+  color:var(--krem);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px 120px;position:relative;
+}
+.hero .eyebrow{
+  font-size:1.05rem;letter-spacing:.14em;font-weight:700;margin-bottom:18px;
+}
+.hero h1{
+  font-size:clamp(3rem,11vw,7.5rem);line-height:1.02;
+  text-shadow:4px 4px 0 rgba(60,31,62,.35);
+}
+.hero .amp{display:block;font-size:.45em;color:var(--sennep);margin:.1em 0}
+.hero .dato{
+  margin-top:30px;display:inline-block;
+  border-top:3px solid var(--sennep);border-bottom:3px solid var(--sennep);
+  padding:10px 26px;font-size:clamp(1.2rem,4vw,1.8rem);font-family:'Shrikhand',cursive;
+}
+.hero .sted{margin-top:14px;font-size:1.15rem;font-weight:500}
+.hero-boelge{
+  position:absolute;bottom:-2px;left:0;width:100%;line-height:0;
+}
+.hero-boelge svg{width:100%;height:70px;display:block}
+
+/* ---------- SEKSJONER ---------- */
+section{padding:80px 24px;max-width:760px;margin:0 auto}
+section h2{font-size:clamp(1.9rem,6vw,2.8rem);margin-bottom:28px;color:var(--solnedgang)}
+.senter{text-align:center}
+
+/* Program som festival-lineup */
+.lineup{
+  background:var(--plomme);color:var(--krem);
+  max-width:none;padding:90px 24px;
+}
+.lineup-indre{max-width:760px;margin:0 auto;text-align:center}
+.lineup h2{color:var(--sennep)}
+.lineup .undertittel{margin-bottom:44px;opacity:.85}
+.akt{margin-bottom:38px}
+.akt .tid{
+  font-weight:700;letter-spacing:.12em;font-size:.95rem;color:var(--fersken);margin-bottom:4px;
+}
+.akt .navn{font-family:'Shrikhand',cursive;font-size:clamp(1.5rem,5.5vw,2.6rem);line-height:1.15}
+.akt .navn.hovedakt{font-size:clamp(2rem,8vw,3.6rem);color:var(--sennep)}
+.akt .detalj{opacity:.8;margin-top:4px}
+.lineup .skille{
+  width:90px;height:4px;background:var(--solnedgang);border-radius:2px;margin:34px auto;
+}
+
+/* Info-seksjoner */
+.info-grid{display:grid;gap:22px}
+.info-kort{
+  border:3px solid var(--plomme);border-radius:26px 26px 90px 26px;
+  padding:26px 28px;background:#fff;
+}
+.info-kort:nth-child(2n){border-radius:26px 26px 26px 90px;border-color:var(--oliven)}
+.info-kort h3{font-size:1.35rem;margin-bottom:8px;color:var(--plomme)}
+.info-kort p{margin-bottom:6px}
+.info-kort a{color:var(--solnedgang);font-weight:700}
+
+/* RSVP */
+.rsvp{
+  background:linear-gradient(160deg,var(--fersken),var(--rosa));
+  max-width:none;padding:90px 24px;text-align:center;
+}
+.rsvp-indre{max-width:600px;margin:0 auto}
+.rsvp h2{color:var(--plomme)}
+.rsvp p{margin-bottom:26px}
+.knapp{
+  display:inline-block;background:var(--plomme);color:var(--krem);
+  padding:16px 40px;border-radius:999px;text-decoration:none;
+  font-weight:700;font-size:1.1rem;transition:transform .15s ease;
+}
+.knapp:hover{transform:translateY(-2px)}
+.knapp:focus-visible{outline:3px solid var(--plomme);outline-offset:3px}
+
+footer{
+  background:var(--plomme);color:var(--krem);text-align:center;
+  padding:46px 24px;font-size:.95rem;
+}
+footer .display{color:var(--sennep);font-size:1.4rem;margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<!-- PASSORDGATE -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-sun" aria-hidden="true"></div>
+    <h1>Johanne &amp; Sondre</h1>
+    <p>Skriv inn passordet fra invitasjonen</p>
+    <input type="password" id="pw" placeholder="Passord" aria-label="Passord" autocomplete="off">
+    <button id="pwBtn">Åpne siden</button>
+    <div id="gateFeil" role="alert" aria-live="polite"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="eyebrow">Vi gifter oss!</div>
+  <h1>Johanne<span class="amp">&amp;</span>Sondre</h1>
+  <div class="dato">25. mai</div>
+  <div class="sted">Vålerenga kirke · Oslo</div>
+  <div class="hero-boelge" aria-hidden="true">
+    <svg viewBox="0 0 1440 70" preserveAspectRatio="none">
+      <path d="M0,40 C240,80 480,0 720,35 C960,70 1200,10 1440,45 L1440,70 L0,70 Z" fill="#FFF6E9"/>
+    </svg>
+  </div>
+</header>
+
+<!-- VELKOMMEN -->
+<section class="senter">
+  <h2>Velkommen til festen vår</h2>
+  <p>Vi inviterer til en dag fylt av kjærlighet, musikk, blomster og gode mennesker — vår helt egen lille festival. Ta med godt humør og dansesko, så ordner vi resten.</p>
+</section>
+
+<!-- PROGRAM SOM LINEUP -->
+<div class="lineup">
+  <div class="lineup-indre">
+    <h2>Dagens lineup</h2>
+    <p class="undertittel">Én scene. Én dag. To hovedpersoner.</p>
+
+    <div class="akt">
+      <div class="tid">KL. 13.00 · VÅLERENGA KIRKE</div>
+      <div class="navn hovedakt">Vielsen</div>
+      <div class="detalj">Hovedakten — kom i god tid, dørene åpner 12.30</div>
+    </div>
+
+    <div class="skille"></div>
+
+    <div class="akt">
+      <div class="tid">KL. 14.00</div>
+      <div class="navn">Bobler &amp; gratulasjoner</div>
+      <div class="detalj">Utenfor kirken — fotografering av brudeparet</div>
+    </div>
+
+    <div class="akt">
+      <div class="tid">KL. 17.00</div>
+      <div class="navn">Middag &amp; taler</div>
+      <div class="detalj">Festlokalet — mer info kommer i invitasjonen</div>
+    </div>
+
+    <div class="akt">
+      <div class="tid">KL. 21.00</div>
+      <div class="navn">Kake &amp; kaffe</div>
+    </div>
+
+    <div class="akt">
+      <div class="tid">KL. 22.00 → SENT</div>
+      <div class="navn">Dansegulvet åpner</div>
+      <div class="detalj">Vi danser til sola står opp (eller i hvert fall lenge)</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRAKTISK INFO -->
+<section>
+  <h2>Praktisk info</h2>
+  <div class="info-grid">
+    <div class="info-kort">
+      <h3>Sted</h3>
+      <p>Vielsen finner sted i Vålerenga kirke, Hedmarksgata 32, Oslo.</p>
+      <p>Kollektivt anbefales — trikk og buss stopper like ved.</p>
+    </div>
+    <div class="info-kort">
+      <h3>Antrekk: Festival bohem</h3>
+      <p>Tenk sommerfest i solnedgang — lette stoffer, varme farger, blomster i håret, dress uten slips om du vil. Vær deg selv, bare litt festligere.</p>
+    </div>
+    <div class="info-kort">
+      <h3>Toastmaster</h3>
+      <p>Ønsker du å holde tale eller bidra med innslag? Ta kontakt med vår toastmaster.</p>
+      <p><a href="mailto:toastmaster@epost.no">toastmaster@epost.no</a></p>
+    </div>
+    <div class="info-kort">
+      <h3>Ønskeliste: Kjøp oss festivalbillett</h3>
+      <p>Vi ønsker oss ingen ting — men vi ønsker oss et sted. I stedet for gaver håper vi du vil spandere en «festivalbillett» til bryllupsreisen vår.</p>
+      <p>Alle bidrag, store som små, går rett i bryllupsreisefondet.</p>
+      <p><strong>Vipps:</strong> 000 00 000 <span style="opacity:.7">(merk med navnet ditt)</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<div class="rsvp">
+  <div class="rsvp-indre">
+    <h2>Kommer du?</h2>
+    <p>Gi oss beskjed innen <strong>25. april</strong> — og si gjerne fra om allergier eller andre hensyn.</p>
+    <a class="knapp" href="mailto:johanneogsondre@epost.no?subject=RSVP%20bryllup%2025.%20mai">Svar på invitasjonen</a>
+  </div>
+</div>
+
+<footer>
+  <div class="display">Johanne &amp; Sondre</div>
+  <div>25. mai · Vålerenga kirke · Oslo</div>
+</footer>
+
+<script>
+// Enkel passordgate (klientside — holder nysgjerrige ute, men er ikke reell sikkerhet)
+const PASSORD = "25mai"; // ← endre passordet her
+
+const gate = document.getElementById('gate');
+const pw = document.getElementById('pw');
+const btn = document.getElementById('pwBtn');
+const feil = document.getElementById('gateFeil');
+
+function sjekk(){
+  if(pw.value.trim().toLowerCase() === PASSORD.toLowerCase()){
+    gate.classList.add('open');
+    setTimeout(()=>gate.remove(), 700);
+  } else {
+    feil.textContent = "Hmm, det stemte ikke helt — prøv igjen!";
+    pw.value = "";
+    pw.focus();
+  }
+}
+btn.addEventListener('click', sjekk);
+pw.addEventListener('keydown', e => { if(e.key === 'Enter') sjekk(); });
+</script>
+
+</body>
+</html>
