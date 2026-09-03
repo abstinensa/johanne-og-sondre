@@ -36,11 +36,22 @@ Desse felta inneheld verdiar som må haldast oppdaterte og kan endre seg:
 - **Passord** — `const PASSORD` nedst i `<script>`.
 
 Status per no: e-post-adressene (toastmaster + RSVP) og Vipps-nummeret er
-**enno ikkje mottatt** frå brudeparet ("kommer" i påvente av svar) og står
-difor framleis som placeholder (`toastmaster@epost.no`,
-`johanneogsondre@epost.no`, `000 00 000`) i fila. Desse må oppdaterast med
-ekte verdiar så snart dei ligg føre — dei skal **aldri** fyllast ut med
-oppdikta/gjetta verdiar sidan sida er live og brukt av ekte gjester til
-RSVP og betaling.
+**enno ikkje mottatt** frå brudeparet. På eksplisitt ønske frå brudeparet
+viser sida no berre teksten **"Kommer"** i staden for oppdikta/placeholder
+e-postar og Vipps-nummer:
 
-Passordet er sett til **`29mai`** (matcher bryllaupsdatoen).
+- Toastmaster-kortet viser "Kommer" i staden for ei mailto-lenke.
+- Vipps-feltet viser "Vipps: Kommer".
+- RSVP-knappen er gjort om frå ei fungerande `mailto:`-lenke til ein
+  ikkje-klikkbar `<span class="knapp">` med teksten "RSVP-e-post kommer",
+  sidan ei fungerande knapp med falsk e-post ville gitt gjester ein daud
+  lenke.
+
+Desse tre stadene må oppdaterast med ekte verdiar så snart dei ligg føre —
+då skal RSVP-knappen igjen bli ei fungerande `<a class="knapp"
+href="mailto:...">`-lenke. Dei skal **aldri** fyllast ut med
+oppdikta/gjetta verdiar i mellomtida, sidan sida er live og brukt av ekte
+gjester til RSVP og betaling.
+
+Bryllaupsdato er **29. mai**, og passordet er sett til **`29mai`**
+(matcher datoen).
