@@ -11,8 +11,10 @@ domene ([www.johanneogsondre.no](https://www.johanneogsondre.no)). Sida er
 - `CNAME` — **må aldri slettast eller endrast**. Krevst for det eigne
   domenet på GitHub Pages.
 - `README.md`
-- `spill.html` — eige "snurr hjulet"-spel. Ikkje lenkja frå `index.html`
-  lenger etter redesignet (sjå under), men fila ligg framleis i repoet.
+- `spill.html` — eige "snurr hjulet"-spel ("Hvilken bryllupsgjest er du?"),
+  lenkja frå ein eigen kort-seksjon (`#spill`) i `index.html`. Fila har sin
+  eigen, uendra passordgate i den gamle festival-stilen (sjå eigen kode
+  der) — han er ikkje visuelt oppdatert til den nye fargepaletten.
 
 ## Reglar for endringar
 
