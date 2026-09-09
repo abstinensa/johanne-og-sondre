@@ -2,56 +2,83 @@
 
 Bryllaupsnettsida til Johanne og Sondre, hosta på GitHub Pages med eige
 domene ([www.johanneogsondre.no](https://www.johanneogsondre.no)). Sida er
-éi fil: `index.html`. Bryllaupsdatoen er **29. mai**.
+éi fil: `index.html`. Bryllaupsdatoen er **29. mai 2027**.
 
 ## Filer
 
-- `index.html` — heile sida (struktur, styling og skript i éi fil).
+- `index.html` — heile sida (struktur, styling og skript i éi fil, inkludert
+  bileta som base64).
 - `CNAME` — **må aldri slettast eller endrast**. Krevst for det eigne
   domenet på GitHub Pages.
 - `README.md`
+- `spill.html` — eige "snurr hjulet"-spel. Ikkje lenkja frå `index.html`
+  lenger etter redesignet (sjå under), men fila ligg framleis i repoet.
 
 ## Reglar for endringar
 
 - Innhaldet på sida skal vere på **bokmål**.
 - Behald design, fargar og tone som dei er — ikkje gjer om på layout,
-  fargepalett (`--plomme`, `--solnedgang`, `--fersken`, `--krem`,
-  `--oliven`, `--sennep`, `--rosa`) eller skrifttypar utan at det er
-  eksplisitt bedt om.
+  fargepalett (`--paper`, `--card`, `--ink`, `--muted`, `--accent`,
+  `--line`, `--shadow`) eller skrifttypar utan at det er eksplisitt bedt
+  om.
 - Ikkje rør `CNAME`.
 - Gjer berre dei endringane som er eksplisitt bedt om — ikkje "forbetre"
   eller endre anna innhald på eiga hand.
-- Passordgata (`#gate`, `const PASSORD` nedst i skriptet) er berre
+- Passordgata (`#password-gate`, `var PASSORD` nedst i skriptet) er berre
   klientside-fnising, ikkje reell sikkerheit — den held nysgjerrige ute,
   ikkje motiverte personar.
+- Sida er hosta på **GitHub Pages**, ikkje Netlify. Skjema (`<form>`) kan
+  difor **ikkje** bruke `data-netlify="true"` eller elles stole på at
+  GitHub Pages tek imot innsendingar — det finst ingen backend. Sjå eige
+  avsnitt under om dei to skjemaa på sida.
+
+## Skjema (toastmaster-kontakt og RSVP)
+
+Sida har to `<form>`-element: `#toastmaster-form` (kontakt toastmaster) og
+`#svar-form` (RSVP, med moglegheit for å leggje til fleire personar).
+Ingen av dei er kopla til noka reell innsendingsløysing enno — eit script
+(`disableFormSubmit(...)` nær botnen av fila) fangar opp `submit`,
+hindrar sidelasting/datatap, og viser i staden ei tydeleg tekstmelding om
+at funksjonen ikkje er aktivert enno, med telefonnummera til Johanne og
+Sondre som alternativ.
+
+Brudeparet ordnar sjølv eit ekte skjema-baksystem (t.d. Google Form,
+Formspree e.l.) og gir beskjed når det er klart. **Når** ei ekte
+skjema-løysing/lenkje ligg føre:
+
+- Kople dei to skjemaa til den løysinga (t.d. `action`-attributt til eit
+  Formspree-endepunkt, eller erstatt skjemaet med ei lenkje til eit
+  Google Form) i staden for `disableFormSubmit`.
+- **Vér obs på lenkjer med redigeringstilgang** (t.d. ei Google
+  Sheets-lenkje av typen `.../edit?usp=drivesdk`) — slike lenkjer gir alle
+  som klikkar på dei redigeringstilgang til heile arket, ikkje berre eit
+  skjema for å melde seg på. Slike lenkjer skal **aldri** publiserast
+  direkte på ei offentleg side. Spør brudeparet om ei visningslenkje eller
+  eit ekte skjema/endepunkt i staden dersom du berre får ei edit-lenkje.
 
 ## Kontaktinfo / sensitive verdiar i sida
 
 Desse felta inneheld verdiar som må haldast oppdaterte og kan endre seg:
 
-- **Toastmaster-e-post** — `mailto:`-lenke i info-kortet "Toastmaster".
-- **RSVP-e-post** — `mailto:`-lenke (med subject) i RSVP-seksjonen,
-  same adresse kan òg stå som synleg tekst.
-- **Vipps-nummer** — i info-kortet "Ønskeliste: Kjøp oss festivalbillett".
-- **Passord** — `const PASSORD` nedst i `<script>`.
+- **Telefonnummer til Johanne og Sondre** — i footeren (`tel:`-lenkjer),
+  brukt som kontakt generelt og som midlertidig RSVP-alternativ medan
+  skjemaa ikkje er aktiverte.
+- **Toastmaster-kontaktskjema** — `#toastmaster-form`, sjå eige avsnitt
+  over.
+- **RSVP-skjema** — `#svar-form`, sjå eige avsnitt over. RSVP-frist er
+  **1. februar**.
+- **Passord** — `var PASSORD` nedst i `<script>`.
+- **Vielsestad/-tid** — Vålerenga kirke, kl. 14.30.
+- **Festlokale** — Kruttverket.
 
-Status per no: e-post-adressene (toastmaster + RSVP) og Vipps-nummeret er
-**enno ikkje mottatt** frå brudeparet. På eksplisitt ønske frå brudeparet
-viser sida no berre teksten **"Kommer"** i staden for oppdikta/placeholder
-e-postar og Vipps-nummer:
+Desse verdiane skal **aldri** fyllast ut med oppdikta/gjetta verdiar —
+berre med det brudeparet faktisk oppgir, sidan sida er live og brukt av
+ekte gjester til RSVP og kontakt.
 
-- Toastmaster-kortet viser "Kommer" i staden for ei mailto-lenke.
-- Vipps-feltet viser "Vipps: Kommer".
-- RSVP-knappen er gjort om frå ei fungerande `mailto:`-lenke til ein
-  ikkje-klikkbar `<span class="knapp">` med teksten "RSVP-e-post kommer",
-  sidan ei fungerande knapp med falsk e-post ville gitt gjester ein daud
-  lenke.
+Merk: denne versjonen av sida har **ingen** eiga "ønskeliste"/Vipps-seksjon
+(gåve-seksjonen seier berre at brudeparet ikkje ønskjer gåver, men tek
+gjerne imot bidrag til bryllupsreisa). Dersom eit Vipps-nummer skal leggjast
+til seinare, må plassering avklarast eksplisitt før det gjerast.
 
-Desse tre stadene må oppdaterast med ekte verdiar så snart dei ligg føre —
-då skal RSVP-knappen igjen bli ei fungerande `<a class="knapp"
-href="mailto:...">`-lenke. Dei skal **aldri** fyllast ut med
-oppdikta/gjetta verdiar i mellomtida, sidan sida er live og brukt av ekte
-gjester til RSVP og betaling.
-
-Bryllaupsdato er **29. mai**, og passordet er sett til **`29mai`**
-(matcher datoen).
+Bryllaupsdato er **29. mai 2027**, og passordet er sett til **`29mai`**
+(matchar datoen).
