@@ -36,21 +36,23 @@ domene ([www.johanneogsondre.no](https://www.johanneogsondre.no)). Sida er
 
 ## Skjema (toastmaster-kontakt og RSVP)
 
-Sida har to `<form>`-element: `#toastmaster-form` (kontakt toastmaster) og
-`#svar-form` (RSVP, med moglegheit for å leggje til fleire personar).
-Ingen av dei er kopla til noka reell innsendingsløysing enno — eit script
-(`disableFormSubmit(...)` nær botnen av fila) fangar opp `submit`,
-hindrar sidelasting/datatap, og viser i staden ei tydeleg tekstmelding om
-at funksjonen ikkje er aktivert enno, med telefonnummera til Johanne og
-Sondre som alternativ.
+RSVP (`#svar`) er eit innebygd Google-skjema, «Bryllupsinvitasjon -
+Svarskjema». Det er den einaste svarvegen. Bruk den offentlege
+visningsadressa (`/viewform`), og `?embedded=true` i iframe. Ikkje bruk
+redigerings- eller publish-editor-parametrar.
 
-Brudeparet ordnar sjølv eit ekte skjema-baksystem (t.d. Google Form,
-Formspree e.l.) og gir beskjed når det er klart. **Når** ei ekte
-skjema-løysing/lenkje ligg føre:
+`#toastmaster-form` (kontakt toastmaster) er ikkje kopla til noka reell
+innsendingsløysing enno — eit script (`disableFormSubmit(...)` nær botnen
+av fila) fangar opp `submit`, hindrar sidelasting/datatap, og viser i
+staden ei tydeleg tekstmelding om at funksjonen ikkje er aktivert enno,
+med telefonnummera til Johanne og Sondre som alternativ.
 
-- Kople dei to skjemaa til den løysinga (t.d. `action`-attributt til eit
-  Formspree-endepunkt, eller erstatt skjemaet med ei lenkje til eit
-  Google Form) i staden for `disableFormSubmit`.
+**Når** ei ekte løysing for toastmaster ligg føre:
+
+- Kople toastmaster-skjemaet til den løysinga (t.d. `action`-attributt til
+  eit Formspree-endepunkt, eller erstatt skjemaet med ei lenkje) i staden
+  for `disableFormSubmit`. Ikkje byt ut RSVP-en med noko anna enn det
+  Google-skjemaet brudeparet har oppgitt.
 - **Vér obs på lenkjer med redigeringstilgang** (t.d. ei Google
   Sheets-lenkje av typen `.../edit?usp=drivesdk`) — slike lenkjer gir alle
   som klikkar på dei redigeringstilgang til heile arket, ikkje berre eit
@@ -63,12 +65,12 @@ skjema-løysing/lenkje ligg føre:
 Desse felta inneheld verdiar som må haldast oppdaterte og kan endre seg:
 
 - **Telefonnummer til Johanne og Sondre** — i footeren (`tel:`-lenkjer),
-  brukt som kontakt generelt og som midlertidig RSVP-alternativ medan
-  skjemaa ikkje er aktiverte.
+  brukt som kontakt generelt og som alternativ for toastmaster-skjemaet
+  medan det ikkje er aktivert.
 - **Toastmaster-kontaktskjema** — `#toastmaster-form`, sjå eige avsnitt
   over.
-- **RSVP-skjema** — `#svar-form`, sjå eige avsnitt over. RSVP-frist er
-  **1. februar**.
+- **RSVP-skjema** — Google Form i `#svar`, sjå eige avsnitt over.
+  RSVP-frist er **15. januar 2027** (skjemaet seier 15.01.27).
 - **Passord** — `var PASSORD` nedst i `<script>`.
 - **Vielsestad/-tid** — Vålerenga kirke, kl. 14.30.
 - **Festlokale** — Kruttverket.
