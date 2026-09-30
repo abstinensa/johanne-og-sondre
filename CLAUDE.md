@@ -31,46 +31,44 @@ domene ([www.johanneogsondre.no](https://www.johanneogsondre.no)). Sida er
   ikkje motiverte personar.
 - Sida er hosta på **GitHub Pages**, ikkje Netlify. Skjema (`<form>`) kan
   difor **ikkje** bruke `data-netlify="true"` eller elles stole på at
-  GitHub Pages tek imot innsendingar — det finst ingen backend. Sjå eige
-  avsnitt under om dei to skjemaa på sida.
+  GitHub Pages tek imot innsendingar — det finst ingen backend. RSVP og
+  toastmaster er ikkje skjema på forsida lenger, sjå avsnittet under.
 
-## Skjema (toastmaster-kontakt og RSVP)
+## Svar på invitasjon og toastmaster
 
-RSVP (`#svar`) er eit innebygd Google-skjema, «Bryllupsinvitasjon -
-Svarskjema». Det er den einaste svarvegen. Bruk den offentlege
-visningsadressa (`/viewform`), og `?embedded=true` i iframe. Ikkje bruk
-redigerings- eller publish-editor-parametrar.
+RSVP (`#svar`) er ein knapp, «Svar på invitasjon», som navigerer til det
+offentlege Google-skjemaet. Skjemaet skal **ikkje** liggje innebygd (iframe
+eller `<form>`) på forsida. Bruk visningsadressa (`/viewform`):
 
-`#toastmaster-form` (kontakt toastmaster) er ikkje kopla til noka reell
-innsendingsløysing enno — eit script (`disableFormSubmit(...)` nær botnen
-av fila) fangar opp `submit`, hindrar sidelasting/datatap, og viser i
-staden ei tydeleg tekstmelding om at funksjonen ikkje er aktivert enno,
-med telefonnummera til Johanne og Sondre som alternativ.
+`https://docs.google.com/forms/d/e/1FAIpQLSfOxtejM1LbCJMZxSYofM3igaOGuRa6IF54xdsDBa3XXSmABw/viewform`
 
-**Når** ei ekte løysing for toastmaster ligg føre:
+Ikkje bruk redigerings- eller publish-editor-parametrar. Det finst inga
+eiga påmeldingsside i repoet. Dersom gjesten opnar sida med
+spørjeparametrar (personleg invitasjonslenke eller gjeste-ID), skal dei
+sendast vidare til skjemaet slik at koplinga ikkje blir borte.
 
-- Kople toastmaster-skjemaet til den løysinga (t.d. `action`-attributt til
-  eit Formspree-endepunkt, eller erstatt skjemaet med ei lenkje) i staden
-  for `disableFormSubmit`. Ikkje byt ut RSVP-en med noko anna enn det
-  Google-skjemaet brudeparet har oppgitt.
-- **Vér obs på lenkjer med redigeringstilgang** (t.d. ei Google
-  Sheets-lenkje av typen `.../edit?usp=drivesdk`) — slike lenkjer gir alle
-  som klikkar på dei redigeringstilgang til heile arket, ikkje berre eit
-  skjema for å melde seg på. Slike lenkjer skal **aldri** publiserast
-  direkte på ei offentleg side. Spør brudeparet om ei visningslenkje eller
-  eit ekte skjema/endepunkt i staden dersom du berre får ei edit-lenkje.
+Toastmaster (`#toastmaster`) er telefonkontakt, ikkje eit skjema:
+
+- Andreas Ervik Asbjørnsen — 452 48 933 (`tel:+4745248933`)
+- Espen Høegh Sørum — 456 65 335 (`tel:+4745665335`)
+
+**Vér obs på lenkjer med redigeringstilgang** (t.d. ei Google
+Sheets-lenkje av typen `.../edit?usp=drivesdk`) — slike lenkjer gir alle
+som klikkar på dei redigeringstilgang til heile arket, ikkje berre eit
+skjema for å melde seg på. Slike lenkjer skal **aldri** publiserast
+direkte på ei offentleg side. Spør brudeparet om ei visningslenkje eller
+eit ekte skjema/endepunkt i staden dersom du berre får ei edit-lenkje.
 
 ## Kontaktinfo / sensitive verdiar i sida
 
 Desse felta inneheld verdiar som må haldast oppdaterte og kan endre seg:
 
 - **Telefonnummer til Johanne og Sondre** — i footeren (`tel:`-lenkjer),
-  brukt som kontakt generelt og som alternativ for toastmaster-skjemaet
-  medan det ikkje er aktivert.
-- **Toastmaster-kontaktskjema** — `#toastmaster-form`, sjå eige avsnitt
-  over.
-- **RSVP-skjema** — Google Form i `#svar`, sjå eige avsnitt over.
-  RSVP-frist er **15. januar 2027** (skjemaet seier 15.01.27).
+  brukt som kontakt generelt.
+- **Toastmasterar** — Andreas Ervik Asbjørnsen (452 48 933) og Espen
+  Høegh Sørum (456 65 335) i `#toastmaster`.
+- **RSVP** — knappen «Svar på invitasjon» i `#svar`, som opnar
+  Google-skjemaet. RSVP-frist på sida er **15. januar 2027**.
 - **Passord** — `var PASSORD` nedst i `<script>`.
 - **Vielsestad/-tid** — Vålerenga kirke, kl. 14.30.
 - **Festlokale** — Kruttverket.
