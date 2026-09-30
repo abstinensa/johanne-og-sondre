@@ -46,8 +46,9 @@
     footer h2{font-size:clamp(2rem,5vw,3.35rem);margin-bottom:14px;font-style:italic;font-weight:400}
     .contact{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:14px}
     .contact a{display:inline-block;margin:0;color:var(--ink);font-weight:700}
-    .toastmasters{display:grid;justify-items:start;gap:10px;margin-top:16px}
-    .toastmasters a{color:var(--ink);font-weight:700}
+    .toastmasters{display:grid;justify-items:start;gap:18px;margin-top:16px}
+    .toastmasters p{margin:0;font-weight:700}
+    .toastmasters a,.toastmasters a:link,.toastmasters a:visited,.toastmasters a:hover,.toastmasters a:active,.toastmasters a:focus{color:var(--ink);font-weight:700;text-decoration:none}
     @media(max-width:600px){
       body{font-size:16px}.hero{min-height:590px}.hero::before{background-position:center center}.hero::after{background:linear-gradient(to bottom,transparent 50%,rgba(246,240,231,.2) 66%,var(--paper) 97%)}
       main{width:min(100% - 22px,920px);padding-top:38px}.card{border-radius:18px;padding:24px 20px}.place-links{display:grid}.button{width:100%}.jump-inner{justify-content:flex-start;padding-inline:11px}
@@ -171,7 +172,7 @@
   </section>
 
   <nav class="jump" aria-label="Hopp til innhold"><div class="jump-inner">
-    <a href="#vielse">Vielse</a><a href="#fest">Middag &amp; fest</a><a href="#antrekk">Antrekk</a><a href="#gaver">Gaver</a><a href="#transport">Transport</a><a href="#toastmaster">Toastmaster</a><a href="#spill">Spill</a><a href="#svar">Svar</a>
+    <a href="#vielse">Vielse</a><a href="#fest">Middag &amp; fest</a><a href="#antrekk">Antrekk</a><a href="#gaver">Gaver</a><a href="#transport">Transport</a><a href="#toastmaster">Toastmaster</a><a href="#svar">Svar</a>
   </div></nav>
   <header class="hero" aria-label="Johanne og Sondres bryllup">
     <div class="hero-text"><div class="eyebrow">Vi gifter oss</div><h1>Johanne <span aria-hidden="true">&amp;</span> Sondre</h1><p class="hero-date">Lørdag 29. mai 2027</p></div>
@@ -182,10 +183,9 @@
     <section class="card" id="vielse"><h2>Vielse</h2><p>Vielsen finner sted kl. 14.30 i Vålerenga kirke.</p><div class="place-links"><a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=V%C3%A5lerenga+kirke+Oslo" target="_blank" rel="noopener">Åpne Vålerenga kirke i kart</a></div></section>
     <section class="card" id="fest"><h2>Middag &amp; fest</h2><p>Etter vielsen blir det middag og fest på Kruttverket.</p><div class="place-links"><a class="button secondary" href="https://www.google.com/maps/search/?api=1&query=Kruttverket+Oslo" target="_blank" rel="noopener">Åpne Kruttverket i kart</a></div></section>
     <section class="card" id="antrekk"><h2>Antrekk</h2><p>Pent antrekk. Ta på noe du føler deg fin og festklar i!</p></section>
-    <section class="card" id="gaver"><h2>Gaver</h2><p>Vi har det vi trenger (det har tross alt samlet seg litt på ti år), og ønsker oss ingen gaver. Det eneste vi ønsker er å feire dagen sammen med deg/dere!</p><p>Hvis du har veldig lyst til å gi gave, blir vi glade for et lite bidrag til bryllupsreisen vår!</p></section>
+    <section class="card" id="gaver"><h2>Gaver</h2><p>Det viktigste for oss er å få feire dagen sammen med dere. Dersom dere likevel ønsker å gi oss en gave, setter vi stor pris på et bidrag til bryllupsreisen vår.</p></section>
     <section class="card" id="transport"><h2>Transport</h2><p>Vi ordner transport fra kirken til festlokalet – huk av i svarskjemaet dersom du ikke vil ha transport.</p><p>Det er ca. 20 minutter å gå mellom Vålerenga kirke og Kruttverket. Dersom man kjører selv, gjelder gateparkering.</p><p>Det finnes flere kollektive alternativer både til vielsen og hjem fra festen. Se Ruter eller Google Maps for å finne reisen som passer best.</p></section>
-    <section class="card" id="toastmaster"><h2>Toastmaster</h2><p>Ønsker du å holde tale, bidra med et innslag eller har du noe annet du ønsker å koordinere til festen? Ta gjerne kontakt med våre toastmastere Andreas eller Espen.</p><div class="toastmasters"><a href="tel:+4745248933">Andreas Ervik Asbjørnsen — 452 48 933</a><a href="tel:+4745665335">Espen Høegh Sørum — 456 65 335</a></div></section>
-    <section class="card" id="spill"><h2>Hvilken bryllupsgjest er du?</h2><p>Ta en pause fra det praktiske og snurr hjulet – finn ut hvilken type bryllupsgjest du er!</p><div class="place-links"><a class="button secondary" href="spill.html">Snurr hjulet</a></div></section>
+    <section class="card" id="toastmaster"><h2>Toastmaster</h2><p>Ønsker du å holde tale, bidra med et innslag eller har du noe annet du ønsker å koordinere til festen? Ta gjerne kontakt med våre toastmastere Andreas eller Espen.</p><div class="toastmasters"><p><strong>Andreas Ervik Asbjørnsen</strong><br><a href="tel:+4745248933">452 48 933</a></p><p><strong>Espen Høegh Sørum</strong><br><a href="tel:+4745665335">456 65 335</a></p></div></section>
     <section class="card" id="svar"><h2>Kommer du/dere?</h2><p>Gi beskjed innen 15. januar 2027 om du/dere kommer. Oppgi gjerne eventuelle allergier sammen med svaret.</p><div class="place-links"><a class="button" id="svar-lenke" href="https://docs.google.com/forms/d/e/1FAIpQLSfOxtejM1LbCJMZxSYofM3igaOGuRa6IF54xdsDBa3XXSmABw/viewform">Svar på invitasjon</a></div></section>
   </main>
   <footer><div class="footer-text"><h2>Hilsen Johanne &amp; Sondre</h2><p>Ta gjerne kontakt med oss dersom du lurer på noe.</p><p class="contact"><a href="tel:+4747816201">Johanne: 478 16 201</a><a href="tel:+4795167282">Sondre: 951 67 282</a></p></div></footer>
