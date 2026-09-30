@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+try {
+  if (sessionStorage.getItem('wedding-access-29mai') === 'granted') {
+    document.documentElement.classList.add('har-tilgang');
+  }
+} catch (e) {}
+</script>
 <title>Hvilken bryllupsgjest er du? — Johanne & Sondre</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,6 +44,7 @@ h1,h2,h3,.display{font-family:'Shrikhand',cursive;font-weight:400;letter-spacing
   transition:opacity .6s ease, visibility .6s;
 }
 #gate.open{opacity:0;visibility:hidden}
+html.har-tilgang #gate{display:none}
 .gate-card{
   text-align:center;color:var(--krem);max-width:420px;width:100%;
 }
@@ -191,7 +199,9 @@ h1,h2,h3,.display{font-family:'Shrikhand',cursive;font-weight:400;letter-spacing
 </div>
 
 <script>
-// ---------- PASSORDGATE (identisk logikk og passord som index.html) ----------
+// ---------- PASSORDGATE ----------
+// Same session flag as index.html (ACCESS_KEY). One unlock covers the whole visit.
+const ACCESS_KEY = "wedding-access-29mai";
 const PASSORD = "29mai"; // ← endre passordet her
 
 const gate = document.getElementById('gate');
@@ -199,18 +209,36 @@ const pw = document.getElementById('pw');
 const btn = document.getElementById('pwBtn');
 const feil = document.getElementById('gateFeil');
 
-function sjekk(){
-  if(pw.value.trim().toLowerCase() === PASSORD.toLowerCase()){
-    gate.classList.add('open');
-    setTimeout(()=>gate.remove(), 700);
-  } else {
-    feil.textContent = "Hmm, det stemte ikke helt — prøv igjen!";
-    pw.value = "";
-    pw.focus();
-  }
+function harTilgang(){
+  try { return sessionStorage.getItem(ACCESS_KEY) === "granted"; }
+  catch (e) { return false; }
 }
-btn.addEventListener('click', sjekk);
-pw.addEventListener('keydown', e => { if(e.key === 'Enter') sjekk(); });
+
+function lagreTilgang(){
+  try { sessionStorage.setItem(ACCESS_KEY, "granted"); } catch (e) {}
+}
+
+function apneGate(){
+  lagreTilgang();
+  gate.classList.add('open');
+  setTimeout(() => gate.remove(), 700);
+}
+
+if (harTilgang()) {
+  gate.remove();
+} else {
+  function sjekk(){
+    if(pw.value.trim().toLowerCase() === PASSORD.toLowerCase()){
+      apneGate();
+    } else {
+      feil.textContent = "Hmm, det stemte ikke helt — prøv igjen!";
+      pw.value = "";
+      pw.focus();
+    }
+  }
+  btn.addEventListener('click', sjekk);
+  pw.addEventListener('keydown', e => { if(e.key === 'Enter') sjekk(); });
+}
 
 // ---------- GJESTETYPER ----------
 const GJESTER = [
