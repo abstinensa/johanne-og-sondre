@@ -185,10 +185,10 @@
     <section class="card" id="antrekk"><h2>Antrekk</h2><p>Pent antrekk. Ta på noe du føler deg fin og festklar i!</p></section>
     <section class="card" id="gaver"><h2>Gaver</h2><p>Det viktigste for oss er å få feire dagen sammen med dere. Dersom dere likevel ønsker å gi oss en gave, setter vi stor pris på et bidrag til bryllupsreisen vår.</p></section>
     <section class="card" id="transport"><h2>Transport</h2><p>Vi ordner transport fra kirken til festlokalet – huk av i svarskjemaet dersom du ikke vil ha transport.</p><p>Det er ca. 20 minutter å gå mellom Vålerenga kirke og Kruttverket. Dersom man kjører selv, gjelder gateparkering.</p><p>Det finnes flere kollektive alternativer både til vielsen og hjem fra festen. Se Ruter eller Google Maps for å finne reisen som passer best.</p></section>
-    <section class="card" id="toastmaster"><h2>Toastmaster</h2><p>Ønsker du å holde tale, bidra med et innslag eller har du noe annet du ønsker å koordinere til festen? Ta gjerne kontakt med våre toastmastere Andreas eller Espen.</p><div class="toastmasters"><p><strong>Andreas Ervik Asbjørnsen</strong><br><a href="tel:+4745248933">452 48 933</a></p><p><strong>Espen Høegh Sørum</strong><br><a href="tel:+4745665335">456 65 335</a></p></div></section>
+    <section class="card" id="toastmaster"><h2>Toastmaster</h2><p>Ønsker du å holde tale, bidra med et innslag eller har du noe annet du ønsker å koordinere til festen? Ta gjerne kontakt med våre toastmastere Andreas eller Espen.</p><div class="toastmasters"><p><strong>Andreas Ervik Asbjørnsen</strong></p><p><strong>Espen Høegh Sørum</strong></p></div><p>Kontaktinformasjon får du på SMS/e-post fra brudeparet.</p></section>
     <section class="card" id="svar"><h2>Kommer du/dere?</h2><p>Gi beskjed innen 15. januar 2027 om du/dere kommer. Oppgi gjerne eventuelle allergier sammen med svaret.</p><div class="place-links"><a class="button" id="svar-lenke" href="https://docs.google.com/forms/d/e/1FAIpQLSfOxtejM1LbCJMZxSYofM3igaOGuRa6IF54xdsDBa3XXSmABw/viewform">Svar på invitasjon</a></div></section>
   </main>
-  <footer><div class="footer-text"><h2>Hilsen Johanne &amp; Sondre</h2><p>Ta gjerne kontakt med oss dersom du lurer på noe.</p><p class="contact"><a href="tel:+4747816201">Johanne: 478 16 201</a><a href="tel:+4795167282">Sondre: 951 67 282</a></p></div></footer>
+  <footer><div class="footer-text"><h2>Hilsen Johanne &amp; Sondre</h2><p>Ta gjerne kontakt med oss dersom du lurer på noe.</p><p>Kontaktinformasjon får du på SMS/e-post fra brudeparet.</p></div></footer>
   <script>
     document.querySelectorAll('.jump a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function (event) {
@@ -218,13 +218,31 @@
       var error = document.getElementById('password-error');
       var card = document.getElementById('password-card');
       var toggle = document.getElementById('toggle-password');
-      var ACCESS_KEY = 'wedding-access-29mai';
-      var PASSORD = '29mai'; // ← endre passordet her
+      // Client-side gating is only obscurity.
+      var ACCESS_KEY = 'wedding-access';
+      var SITE_SALT = 'johanne-og-sondre-gate';
+      var PASSORD_HASH = 'b0f7ff460d18f46692f9b3a0af103e0fa139681428d6f2d487671a564937ad40';
 
       function unlockPage() {
         body.classList.remove('locked');
         try { sessionStorage.setItem(ACCESS_KEY, 'granted'); } catch (e) {}
         window.scrollTo(0, 0);
+      }
+
+      function sha256Hex(text) {
+        try {
+          var data = new TextEncoder().encode(text);
+          return crypto.subtle.digest('SHA-256', data).then(function (buf) {
+            var bytes = new Uint8Array(buf);
+            var hex = '';
+            for (var i = 0; i < bytes.length; i++) {
+              hex += ('0' + bytes[i].toString(16)).slice(-2);
+            }
+            return hex;
+          });
+        } catch (e) {
+          return Promise.reject(e);
+        }
       }
 
       try {
@@ -246,18 +264,23 @@
       if (form && input) {
         form.addEventListener('submit', function (event) {
           event.preventDefault();
-          if (input.value.trim().toLowerCase() === PASSORD) {
-            error.textContent = '';
-            unlockPage();
-            return;
-          }
-          error.textContent = 'Feil passord. Prøv igjen.';
-          input.select();
-          if (card) {
-            card.classList.remove('shake');
-            void card.offsetWidth;
-            card.classList.add('shake');
-          }
+          var candidate = input.value.trim().toLowerCase();
+          sha256Hex(SITE_SALT + candidate).then(function (hash) {
+            if (hash === PASSORD_HASH) {
+              error.textContent = '';
+              unlockPage();
+              return;
+            }
+            error.textContent = 'Feil passord. Prøv igjen.';
+            input.select();
+            if (card) {
+              card.classList.remove('shake');
+              void card.offsetWidth;
+              card.classList.add('shake');
+            }
+          }).catch(function () {
+            error.textContent = 'Feil passord. Prøv igjen.';
+          });
         });
       }
     }());
