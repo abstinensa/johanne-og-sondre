@@ -1,0 +1,4 @@
+# Lokale miljøvariablar / hemmelegheiter — skal aldri committast
+.env
+.env.*
+!.env.example

@@ -82,5 +82,5 @@ Merk: denne versjonen av sida har **ingen** eiga "ønskeliste"/Vipps-seksjon
 gjerne imot bidrag til bryllupsreisa). Dersom eit Vipps-nummer skal leggjast
 til seinare, må plassering avklarast eksplisitt før det gjerast.
 
-Bryllaupsdato er **29. mai 2027**, og passordet er sett til **`29mai`**
-(matchar datoen).
+Bryllaupsdato er **29. mai 2027**. Passord: sjå private notat (ikkje skriv
+passordet i dokumentasjon).
