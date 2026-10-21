@@ -1,5 +1,9 @@
 # Johanne og Sondre — bryllaupsside
 
+Denne fila ligg i `_internal/` fordi GitHub Pages byggjer sida med Jekyll,
+og katalogar som startar med `_` blir ikkje publiserte. Ikkje flytt fila
+tilbake til rot.
+
 Bryllaupsnettsida til Johanne og Sondre, hosta på GitHub Pages med eige
 domene ([www.johanneogsondre.no](https://www.johanneogsondre.no)). Sida er
 éi fil: `index.html`. Bryllaupsdatoen er **29. mai 2027**.
@@ -26,9 +30,11 @@ domene ([www.johanneogsondre.no](https://www.johanneogsondre.no)). Sida er
 - Ikkje rør `CNAME`.
 - Gjer berre dei endringane som er eksplisitt bedt om — ikkje "forbetre"
   eller endre anna innhald på eiga hand.
-- Passordgata (`#password-gate`, `var PASSORD` nedst i skriptet) er berre
-  klientside-fnising, ikkje reell sikkerheit — den held nysgjerrige ute,
-  ikkje motiverte personar.
+- Passordgata (`#password-gate`) er berre klientside-tilsløring, ikkje
+  reell sikkerheit — den held nysgjerrige ute, ikkje motiverte personar.
+  Samanlikninga går mot ein SHA-256-hash (Web Crypto) med eit fast salt i
+  `index.html`. Ikkje skriv passordet i klartekst i sida eller i
+  dokumentasjon.
 - Sida er hosta på **GitHub Pages**, ikkje Netlify. Skjema (`<form>`) kan
   difor **ikkje** bruke `data-netlify="true"` eller elles stole på at
   GitHub Pages tek imot innsendingar — det finst ingen backend. RSVP og
@@ -47,10 +53,9 @@ eiga påmeldingsside i repoet. Dersom gjesten opnar sida med
 spørjeparametrar (personleg invitasjonslenke eller gjeste-ID), skal dei
 sendast vidare til skjemaet slik at koplinga ikkje blir borte.
 
-Toastmaster (`#toastmaster`) er telefonkontakt, ikkje eit skjema:
-
-- Andreas Ervik Asbjørnsen — 452 48 933 (`tel:+4745248933`)
-- Espen Høegh Sørum — 456 65 335 (`tel:+4745665335`)
+Toastmaster (`#toastmaster`) er ikkje eit skjema. Namna Andreas Ervik
+Asbjørnsen og Espen Høegh Sørum står på sida. Telefonnummer skal ikkje
+publiserast. Gjestene får kontaktinformasjon på SMS/e-post frå brudeparet.
 
 **Vér obs på lenkjer med redigeringstilgang** (t.d. ei Google
 Sheets-lenkje av typen `.../edit?usp=drivesdk`) — slike lenkjer gir alle
@@ -63,13 +68,13 @@ eit ekte skjema/endepunkt i staden dersom du berre får ei edit-lenkje.
 
 Desse felta inneheld verdiar som må haldast oppdaterte og kan endre seg:
 
-- **Telefonnummer til Johanne og Sondre** — i footeren (`tel:`-lenkjer),
-  brukt som kontakt generelt.
-- **Toastmasterar** — Andreas Ervik Asbjørnsen (452 48 933) og Espen
-  Høegh Sørum (456 65 335) i `#toastmaster`.
+- **Telefonnummer** — skal ikkje liggje i sida eller i dokumentasjon.
+  Gjestene får kontaktinformasjon på SMS/e-post.
+- **Toastmasterar** — Andreas Ervik Asbjørnsen og Espen Høegh Sørum i
+  `#toastmaster`, utan telefonnummer.
 - **RSVP** — knappen «Svar på invitasjon» i `#svar`, som opnar
   Google-skjemaet. RSVP-frist på sida er **15. januar 2027**.
-- **Passord** — `var PASSORD` nedst i `<script>`.
+- **Passord** — berre som SHA-256-hash i skriptet, ikkje i klartekst.
 - **Vielsestad/-tid** — Vålerenga kirke, kl. 14.30.
 - **Festlokale** — Kruttverket.
 
@@ -82,5 +87,5 @@ Merk: denne versjonen av sida har **ingen** eiga "ønskeliste"/Vipps-seksjon
 gjerne imot bidrag til bryllupsreisa). Dersom eit Vipps-nummer skal leggjast
 til seinare, må plassering avklarast eksplisitt før det gjerast.
 
-Bryllaupsdato er **29. mai 2027**, og passordet er sett til **`29mai`**
-(matchar datoen).
+Bryllaupsdato er **29. mai 2027**. Passordet skal ikkje skrivast i
+dokumentasjon eller i klartekst i sida.
