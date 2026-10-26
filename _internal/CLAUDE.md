@@ -68,8 +68,9 @@ eit ekte skjema/endepunkt i staden dersom du berre får ei edit-lenkje.
 
 Desse felta inneheld verdiar som må haldast oppdaterte og kan endre seg:
 
-- **Telefonnummer** — skal ikkje liggje i sida eller i dokumentasjon.
-  Gjestene får kontaktinformasjon på SMS/e-post.
+- **Telefonnummer** — brudeparet sine eigne nummer (Johanne og Sondre) står i
+  footeren. Andre personars nummer (t.d. toastmasterar) skal ikkje liggje på
+  sida.
 - **Toastmasterar** — Andreas Ervik Asbjørnsen og Espen Høegh Sørum i
   `#toastmaster`, utan telefonnummer.
 - **RSVP** — knappen «Svar på invitasjon» i `#svar`, som opnar
